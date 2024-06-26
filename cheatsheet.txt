@@ -1,0 +1,77 @@
+Change password user with admin priviledge
+ - net user <username> <password>
+1. Users
+  a. Local users
+    - To view the local user accounts in GUI, press ‘Windows+R’, then type ‘lusrmgr.msc’ and click 'okay'
+    - Another case, open Powershell and run it as an administrator. Type 'Get-LocalUser' and press enter
+  b. Net user 
+    - Open cli and run it as an administrator. Type 'net user' and press enter
+  c. Net localgroup
+    - Open cli and run it as an administrator. Type 'net local group administrators' and press enter
+2. Process
+  a. Tasklist
+    - Open cli and run it as an administrator. Type 'tasklist' and press enter
+  b. Task Manager
+    - To view the running processes in a GUI, press ‘Windows+R’, then type ‘taskmgr.exe’ and click 'ok'
+  c. Powershell
+    - Open Powershell and run it as an administrator. Type 'get-process' and press enter
+  d. Wmic is very useful when it comes to incident response.
+    - Open Powershell and run it as an administrator. Type 'wmic process list full' and press enter
+    - Open Powershell and run it as an administrator. Type 'wmic process get name,parentprocessid,processid' and press enter
+    - Open Powershell and run it as an administrator. Type 'wmic process where 'ProcessID=PID’ get Commandline' and press enter
+3. Services 
+  a. GUI
+    - press ‘Windows+R’ and type ‘services.msc’ and press enter
+  b. net start
+    - Open cli and run it as an administrator. Type 'net start' and press enter
+  c. sc query
+    - Open cli and run it as an administrator. Type 'sc query | more' and press enter
+4. Task Scheduler 
+  a. Tasklist
+    - Open cli and run it as an administrator. Type 'tasklist /svc' and press enter
+  b. GUI
+    - C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools and choose Task Scheduler
+  c. Schtasks
+    - Open cli and run it as an administrator. Type 'schtasks' and press enter
+5. Startup
+  a. GUI
+    - To view the applications in Startup menu in GUI, Task Manager -> Startup
+  b. Powershell
+    - To view, the startup applications in the PowerShell run the PowerShell as an administrator, type 'wmic startup get caption,command'
+    - To get a detailed list of the AutoStart applications in PowerShell , you can run it as an administrator and type ‘Get-CimInstance Win32_StartupCommand | Select-Object Name, command, Location, User | Format-List’
+6. Registry
+  a. GUI
+    - Open REGEDIT
+  b. PowerShell
+    - reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run #Local Machine of the Run key
+    - reg query HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run #Current User of the Run key
+7. Active TCP and UDP Port
+  a. netstat
+    - Open the command prompt, type ‘netstat –ano’ and press enter
+  b. Powershell
+    - Run PowerShell and type ‘Get-NetTCPConnection -LocalAddress 192.168.0.110 | Sort-Object LocalPort’ and press enter #You will get detailed information about the IP and the local ports
+8. File Sharing
+  a. net view
+    - In order to check up on the file sharing options in command prompt, type ‘net view \\<localhost>’ and press enter.
+  b. SMBShare
+    - To see the file sharing in PowerShell, you can type ‘Get -SMBShare’ and press enter.
+9. Files
+  a. Forfiles
+    - To view the .exe files with their path to locate them in the command prompt, type ‘forfiles /D -10 /S /M *.exe /C "cmd /c echo @path"’ and press enter
+    - To View files without its path and more details of the particular file extension and its modification date, type ‘forfiles /D -10 /S /M *.exe /C "cmd /c echo @ext @fname @fdate"’and press enter
+    - To check for files modified in the last 10 days type ‘forfiles /p c: /S /D -10’
+    - To check for file size below 6MB, you can use the file explorer’s search box and enter "size:>6M”
+10. Firewall Settings
+    - To view the firewall configurations in the command prompt, type ‘netsh firewall show config’ and press enter to view the inbound and outbound traffic
+    - To view the firewall settings of the current profile in the command prompt, type ‘netsh advfirewall show currentprofile’ and press enter.
+11. Sessions with other system
+    - To check the session details that are created with other systems, you can type ‘net use’ in command prompt and press enter
+12. Open Sessions
+    - You can type ‘net session’ in the command prompt and press enter to see any open sessions of your system. It gives you the details about the duration of the session.
+13. Log Enteries
+    - To view the log entries in GUI you can open the event viewer and see the logs.  Press ‘Windows+R’ and type ‘eventvwr.msc’ and press ‘OK’.
+  a. Event Viewer
+  b. Cmd
+    - To export certain logs of a particular event in command prompt type ‘wevtutil qe security’ and press enter
+  c. PowerShell
+    - To get the event log list in the PowerShell, type ‘Get-EventLog -list’ and type the particular event in the supply value and you will get event details of that particular event.
