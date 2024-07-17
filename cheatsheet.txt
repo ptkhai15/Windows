@@ -1,5 +1,7 @@
 Change password user with admin priviledge
  - net user <username> <password>
+Open recycle bin
+ - press ‘Windows+R’ and type 'explorer.exe shell:RecycleBinFolder' and press enter
 1. Users
   a. Local users
     - To view the local user accounts in GUI, press ‘Windows+R’, then type ‘lusrmgr.msc’ and click 'okay'
